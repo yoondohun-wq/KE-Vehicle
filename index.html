@@ -2,7 +2,7 @@
 <html class="light" lang="ko">
 <head>
     <meta charset="utf-8">
-    <!-- 💡 [해결] 더블탭 화면 확대 완벽 방지 (user-scalable=no) -->
+    <!-- 화면 확대(줌) 완벽 방지 -->
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
     <title>KOREAN AIR | VEHICLE SYSTEM</title>
     <!-- Material Symbols -->
@@ -33,7 +33,7 @@
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
         
-        /* 💡 [해결] 버튼 연타 시 화면 확대 징후 원천 차단 (touch-action: manipulation) */
+        /* 버튼 연타 시 화면 확대 징후 원천 차단 */
         button, .clickable, a { touch-action: manipulation; transition: all 0.15s ease-in-out; }
         button:active, .clickable:active, a:active { transform: scale(0.96); opacity: 0.85; }
         
@@ -57,7 +57,7 @@
         .donut-hole { border-radius: 50%; width: 65%; height: 65%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; flex-direction: column; }
     </style>
 
-    <!-- 💡 [해결] 아이폰 앱 아이콘(K 오류 방지용 iOS 규격 강화 및 헥스코드/특수문자 100% 인코딩) -->
+    <!-- iOS 앱 아이콘 규격 강화 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KE Vehicle">
@@ -66,7 +66,7 @@
 </head>
 <body class="bg-[#f2f4f7] dark:bg-darkBg text-[#191c1e] dark:text-[#e2e3e5] antialiased flex flex-col min-h-screen selection:bg-[#00256c] selection:text-white overflow-x-hidden transition-colors duration-200">
 
-    <!-- [PIN 보안 화면] 2656 -->
+    <!-- [PIN 보안 화면] -->
     <div id="pinLockScreen" class="fixed inset-0 z-[200] bg-[#00256c] text-white flex flex-col items-center justify-center p-6 transition-opacity duration-300">
         <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-4xl text-[#ffc107]">lock</span><span class="font-black text-2xl tracking-wider">KOREAN AIR</span></div>
         <p class="text-sm text-[#d9e2ff] font-medium mb-10 text-center leading-relaxed">
@@ -80,7 +80,6 @@
             <div class="w-4 h-4 rounded-full border-2 border-white bg-transparent transition-all"></div>
             <div class="w-4 h-4 rounded-full border-2 border-white bg-transparent transition-all"></div>
         </div>
-        <!-- 💡 에러 메시지가 유지되도록 로직 변경 완료 -->
         <p id="pinErrorMsg" class="text-[#ffdad6] text-xs font-bold mb-6 h-4 opacity-0 transition-opacity">비밀번호가 일치하지 않습니다.</p>
         <div class="grid grid-cols-3 gap-3 max-w-xs w-full px-4">
             <button onclick="inputPin('1')" class="h-16 rounded-2xl bg-white/10 text-2xl font-bold clickable">1</button>
@@ -105,7 +104,8 @@
             <span class="material-symbols-outlined text-2xl fill">directions_car</span>
             <h1 class="text-lg font-black tracking-tighter">KOREAN AIR <span class="font-normal text-[#757682] mx-0.5">|</span> VEHICLE</h1>
         </button>
-        <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl flex items-center justify-center text-[#444651] dark:text-[#c5c6d2] hover:bg-gray-100 dark:hover:bg-darkBg transition-all clickable">
+        <!-- 다크모드 버튼 간섭 방지를 위해 relative z-50 적용 -->
+        <button onclick="toggleDarkMode()" class="relative z-50 w-10 h-10 rounded-xl flex items-center justify-center text-[#444651] dark:text-[#c5c6d2] hover:bg-gray-100 dark:hover:bg-darkBg transition-all clickable">
             <span id="themeIcon" class="material-symbols-outlined text-xl">dark_mode</span>
         </button>
     </header>
@@ -136,7 +136,6 @@
                 <div class="relative flex items-center gap-2 mb-3.5">
                     <div class="relative flex-grow flex items-center">
                         <span class="material-symbols-outlined absolute left-3.5 text-[#00256c] dark:text-[#a8c7fa] font-bold text-xl">search</span>
-                        <!-- 💡 [해결] 실시간 조회 해제: oninput은 'X'버튼 띄우기만, 실제 조회는 엔터나 버튼 클릭으로만 -->
                         <input id="searchInput" type="text" oninput="toggleClearBtn()"
                                onkeydown="if(event.key==='Enter') { commitRecentSearchAndTrigger(); }"
                                placeholder="차량번호, 사용처 등 입력" 
@@ -173,7 +172,6 @@
                 
                 <div class="flex justify-between items-center mb-2.5">
                     <h3 class="text-xs font-black text-[#00256c] dark:text-[#a8c7fa] flex items-center gap-1"><span class="material-symbols-outlined text-[#757682] text-sm">history</span> 최근 검색어</h3>
-                    <!-- 💡 [해결] 최근검색어 전체삭제 버튼 복구 완벽 작동 -->
                     <button id="clearAllRecentsBtn" onclick="clearAllRecents()" class="text-[11px] font-bold text-[#ba1a1a] dark:text-red-400 flex items-center gap-0.5 bg-red-50 dark:bg-red-950/20 px-2 py-1 rounded-md hidden clickable">🗑️ 전체삭제</button>
                 </div>
                 <div id="recentSearchList" class="flex flex-wrap gap-2 empty:after:content-['최근_검색_기록이_없습니다.'] empty:after:text-xs empty:after:text-[#757682]"></div>
@@ -273,7 +271,8 @@
 
         <main id="view-expire-list" class="fixed inset-0 z-50 bg-[#f2f4f7] dark:bg-darkBg pt-[14px] pb-[96px] px-4 overflow-y-auto hidden animate-slide-up">
             <button onclick="closeExpireView()" class="mb-4 flex items-center gap-1 text-[#00256c] dark:text-[#a8c7fa] font-black text-sm clickable px-3 py-2 bg-white dark:bg-darkCard rounded-xl shadow-sm w-fit border border-[#c5c6d2]/50 dark:border-darkBorder"><span class="material-symbols-outlined text-base">arrow_back</span> 대시보드로 돌아가기</button>
-            <h2 class="text-base font-black text-[#00256c] dark:text-[#a8c7fa] mb-3 flex items-center gap-1.5"><span class="material-symbols-outlined fill text-[#ba1a1a]">calendar_today</span> 2026년 계약 만료 차량 목록 (복사 가능)</h2>
+            <!-- 💡 텍스트 삭제 반영 완료 -->
+            <h2 class="text-base font-black text-[#00256c] dark:text-[#a8c7fa] mb-3 flex items-center gap-1.5"><span class="material-symbols-outlined fill text-[#ba1a1a]">calendar_today</span> 2026년 계약 만료 차량 목록</h2>
             <div id="expiringListContainer" class="flex flex-col gap-3"></div>
         </main>
 
@@ -330,7 +329,7 @@
                 </div>
             </div>
         </main>
-    </div>
+    </div> <!-- 메인 앱 래퍼 종료 -->
 
     <!-- [하단 3-Tab 네비게이션] -->
     <nav class="fixed bottom-0 w-full z-40 bg-white/95 dark:bg-darkCard/95 backdrop-blur-lg border-t border-[#c5c6d2]/60 dark:border-darkBorder flex justify-around items-center h-[76px] pb-safe px-4 rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] transition-colors duration-200">
@@ -345,7 +344,7 @@
         </button>
     </nav>
 
-    <!-- 팝업창 -->
+    <!-- 팝업창 (Z:9999로 최상단 배치) -->
     <div id="toastPopup" class="fixed bottom-[110px] left-1/2 transform -translate-x-1/2 z-[9999] bg-[#191c1e] dark:bg-gray-100 text-white dark:text-black text-[12px] font-bold px-5 py-3 rounded-full shadow-2xl flex items-center gap-1.5 transition-all duration-300 opacity-0 pointer-events-none whitespace-nowrap">
         <span class="material-symbols-outlined text-[16px] text-[#4caf50] fill">check_circle</span><span id="toastMsg">복사되었습니다.</span>
     </div>
@@ -495,7 +494,7 @@
     let recentSearches = JSON.parse(localStorage.getItem('ke_car_recents') || '[]');
 
     // ============================================================================
-    // 2. 🛡️ 5회 오류 제한 PIN 보안 (문구 유지 로직 포함)
+    // 2. 보안 및 잠금 모듈
     // ============================================================================
     let enteredPin = "";
     const CORRECT_PIN = "2656";
@@ -533,7 +532,6 @@
         haptic();
         if (checkLockoutState()) return; 
 
-        // 💡 [해결] 사용자가 새롭게 숫자를 입력하기 시작할 때만 에러 문구를 감춥니다.
         if (enteredPin.length === 0) {
             document.getElementById('pinErrorMsg').style.opacity = '0';
         }
@@ -600,7 +598,6 @@
             
             errorMsgEl.style.opacity = '1';
             
-            // 💡 [해결] 에러 문구를 숨기지 않고 핀 초기화만 진행하여 사용자가 문구를 인지하게 둠
             setTimeout(() => { 
                 screen.classList.remove('animate-shake'); 
                 enteredPin = ""; 
@@ -610,7 +607,44 @@
     }
 
     // ============================================================================
-    // 3. 통합 코어 및 100% 명시적 검색 엔진
+    // 3. 테마 및 스크롤 코어 로직
+    // ============================================================================
+    function toggleDarkMode() {
+        haptic();
+        const html = document.documentElement;
+        const icon = document.getElementById('themeIcon');
+        if (html.classList.contains('dark')) {
+            html.classList.remove('dark');
+            icon.innerText = 'dark_mode';
+            localStorage.setItem('ke_theme', 'light');
+        } else {
+            html.classList.add('dark');
+            icon.innerText = 'light_mode';
+            localStorage.setItem('ke_theme', 'dark');
+        }
+    }
+
+    // 💡 [해결] 이중 스크롤 감지 및 플로팅 버튼 제어 강화
+    window.addEventListener('scroll', () => {
+        const topBtn = document.getElementById('scrollTopBtn');
+        const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+        
+        if (scrollY > 300) {
+            topBtn.style.opacity = '1'; 
+            topBtn.style.pointerEvents = 'auto';
+        } else {
+            topBtn.style.opacity = '0'; 
+            topBtn.style.pointerEvents = 'none';
+        }
+    });
+
+    function scrollToTop() { 
+        haptic(); 
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+    }
+
+    // ============================================================================
+    // 4. 통합 엔진 및 검색 처리
     // ============================================================================
     let currentDeptFilter = null;
     let currentUseFilter = null;
@@ -619,20 +653,25 @@
     let currentFilteredData = [];
 
     function initApp() {
+        // 저장된 테마 기억 복구
+        if(localStorage.getItem('ke_theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            const icon = document.getElementById('themeIcon');
+            if(icon) icon.innerText = 'light_mode';
+        }
+
         renderFavsAndRecents();
         executeSearch();
         const expireCount = vehicleDB.filter(v => v.ed && v.ed.startsWith("2026")).length;
         document.getElementById('expireCountTxt').innerText = expireCount;
     }
 
-    // 💡 [해결] 실시간 검색 분리: X버튼 표시/숨김 역할만 담당
     function toggleClearBtn() {
         const query = document.getElementById('searchInput').value.trim();
         const clearBtn = document.getElementById('clearSearchBtn');
         if (query.length > 0) clearBtn.classList.remove('hidden'); else clearBtn.classList.add('hidden');
     }
 
-    // 💡 [해결] 검색 버튼이나 엔터, 칩 버튼을 눌렀을 때만 실제 조회 동작
     function executeSearch() {
         const query = document.getElementById('searchInput').value.trim();
         const qLow = query.toLowerCase();
@@ -674,7 +713,7 @@
                 document.getElementById(`use-${u}`).className = `chip-btn ${u === currentUseFilter ? 'active' : 'inactive'} px-3.5 py-1.5 rounded-full whitespace-nowrap flex items-center gap-1 clickable`;
             });
         }
-        executeSearch(); // 칩 필터 시 즉시 결과 반영
+        executeSearch();
     }
 
     function commitRecentSearchAndTrigger() {
@@ -769,7 +808,6 @@
             }).join('');
         } else { favContainer.innerHTML = ''; }
 
-        // 💡 [해결] 최근 검색어 전체삭제 버튼 로직 복구
         const clearBtn = document.getElementById('clearAllRecentsBtn');
         if (recentSearches.length > 0) clearBtn.classList.remove('hidden');
         else clearBtn.classList.add('hidden');
@@ -784,7 +822,7 @@
     }
 
     // ============================================================================
-    // 4. 리스트 렌더러 및 스낵바 매니저
+    // 5. 렌더러 및 스낵바 매니저
     // ============================================================================
     function renderList() {
         const container = document.getElementById('searchResultContainer');
@@ -903,7 +941,7 @@
     }
 
     // ============================================================================
-    // 5. 네비게이션 탭 라우터
+    // 6. 네비게이션 탭 라우터
     // ============================================================================
     const tabs = ['search', 'dashboard', 'accident'];
 
