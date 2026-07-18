@@ -2,7 +2,7 @@
 <html class="light" lang="ko">
 <head>
     <meta charset="utf-8">
-    <!-- 화면 확대(줌) 완벽 방지 -->
+    <!-- 줌인/확대 현상 돌덩이처럼 완벽 방지 -->
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
     <title>KOREAN AIR | VEHICLE SYSTEM</title>
     <!-- Material Symbols -->
@@ -33,7 +33,7 @@
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
         
-        /* 버튼 연타 시 화면 확대 징후 원천 차단 */
+        /* 💡 연타 시 사파리 자체 확대 명령 무시 (manipulation) */
         button, .clickable, a { touch-action: manipulation; transition: all 0.15s ease-in-out; }
         button:active, .clickable:active, a:active { transform: scale(0.96); opacity: 0.85; }
         
@@ -57,12 +57,27 @@
         .donut-hole { border-radius: 50%; width: 65%; height: 65%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; flex-direction: column; }
     </style>
 
-    <!-- iOS 앱 아이콘 규격 강화 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KE Vehicle">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20180%20180%22%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20fill%3D%22%2300256c%22%2F%3E%3Cpath%20d%3D%22M45%20110v14a6%206%200%200%200%206%206h4v6a6%206%200%200%200%206%206h14a6%206%200%200%200%206-6v-6h58v6a6%206%200%200%200%206%206h14a6%206%200%200%200%206-6v-6h4a6%206%200%200%200%206-6v-14l-8-26a12%2010%200%200%200-11-8H64a12%2010%200%200%200-11%208zM72%2094a6%206%200%201%201%200-12%206%206%200%200%201%200%2012zm42%200a6%206%200%201%201%200-12%206%206%200%200%201%200%2012z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20180%20180%22%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20fill%3D%22%2300256c%22%2F%3E%3Cpath%20d%3D%22M45%20110v14a6%206%200%200%200%206%206h4v6a6%206%200%200%200%206%206h14a6%206%200%200%200%206-6v-6h58v6a6%206%200%200%200%206%206h14a6%206%200%200%200%206-6v-6h4a6%206%200%200%200%206-6v-14l-8-26a12%2010%200%200%200-11-8H64a12%2010%200%200%200-11%208zM72%2094a6%206%200%201%201%200-12%206%206%200%200%201%200%2012zm42%200a6%206%200%201%201%200-12%206%206%200%200%201%200%2012z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E">
+    
+    <!-- 💡 [해결] 아이폰 사파리 무조건 순정 패스시키는 동적 고해상도 PNG 아이콘 빌더 주입 -->
+    <script>
+        (function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 180; canvas.height = 180;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#00256c'; ctx.fillRect(0, 0, 180, 180);
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath(); ctx.moveTo(45, 105); ctx.lineTo(58, 72); ctx.lineTo(122, 72); ctx.lineTo(135, 105); ctx.closePath(); ctx.fill();
+            ctx.fillRect(38, 103, 104, 25);
+            ctx.fillStyle = '#00256c'; ctx.beginPath(); ctx.moveTo(60, 78); ctx.lineTo(68, 95); ctx.lineTo(112, 95); ctx.lineTo(120, 78); ctx.closePath(); ctx.fill();
+            ctx.fillStyle = '#ffc107'; ctx.beginPath(); ctx.arc(52, 114, 6, 0, Math.PI*2); ctx.arc(128, 114, 6, 0, Math.PI*2); ctx.fill();
+            const pngData = canvas.toDataURL('image/png');
+            const link1 = document.createElement('link'); link1.rel = 'apple-touch-icon'; link1.href = pngData; document.head.appendChild(link1);
+            const link2 = document.createElement('link'); link2.rel = 'icon'; link2.type = 'image/png'; link2.href = pngData; document.head.appendChild(link2);
+        })();
+    </script>
 </head>
 <body class="bg-[#f2f4f7] dark:bg-darkBg text-[#191c1e] dark:text-[#e2e3e5] antialiased flex flex-col min-h-screen selection:bg-[#00256c] selection:text-white overflow-x-hidden transition-colors duration-200">
 
@@ -80,6 +95,7 @@
             <div class="w-4 h-4 rounded-full border-2 border-white bg-transparent transition-all"></div>
             <div class="w-4 h-4 rounded-full border-2 border-white bg-transparent transition-all"></div>
         </div>
+        <!-- 💡 에러 문구 영구 유지 인터페이스 개편 -->
         <p id="pinErrorMsg" class="text-[#ffdad6] text-xs font-bold mb-6 h-4 opacity-0 transition-opacity">비밀번호가 일치하지 않습니다.</p>
         <div class="grid grid-cols-3 gap-3 max-w-xs w-full px-4">
             <button onclick="inputPin('1')" class="h-16 rounded-2xl bg-white/10 text-2xl font-bold clickable">1</button>
@@ -104,7 +120,7 @@
             <span class="material-symbols-outlined text-2xl fill">directions_car</span>
             <h1 class="text-lg font-black tracking-tighter">KOREAN AIR <span class="font-normal text-[#757682] mx-0.5">|</span> VEHICLE</h1>
         </button>
-        <!-- 다크모드 버튼 간섭 방지를 위해 relative z-50 적용 -->
+        <!-- 다크모드 상단 Z-Index 완전 확보 보정 -->
         <button onclick="toggleDarkMode()" class="relative z-50 w-10 h-10 rounded-xl flex items-center justify-center text-[#444651] dark:text-[#c5c6d2] hover:bg-gray-100 dark:hover:bg-darkBg transition-all clickable">
             <span id="themeIcon" class="material-symbols-outlined text-xl">dark_mode</span>
         </button>
@@ -119,7 +135,7 @@
         </div>
     </div>
 
-    <!-- ⬆️ Top 플로팅 버튼 -->
+    <!-- ⬆️ Top 플로팅 버튼 인터페이스 -->
     <button id="scrollTopBtn" onclick="scrollToTop()" class="fixed bottom-[90px] right-4 z-50 w-11 h-11 bg-white/95 dark:bg-darkCard/95 border border-[#c5c6d2]/50 dark:border-darkBorder rounded-full shadow-xl flex items-center justify-center text-[#00256c] dark:text-[#a8c7fa] opacity-0 pointer-events-none transition-all duration-300 clickable">
         <span class="material-symbols-outlined font-black text-xl">arrow_upward</span>
     </button>
@@ -136,13 +152,13 @@
                 <div class="relative flex items-center gap-2 mb-3.5">
                     <div class="relative flex-grow flex items-center">
                         <span class="material-symbols-outlined absolute left-3.5 text-[#00256c] dark:text-[#a8c7fa] font-bold text-xl">search</span>
+                        <!-- 💡 입력 시에는 렌더링 무반응, 오직 검색 클릭/엔터로만 기동하도록 차단 설계 완료 -->
                         <input id="searchInput" type="text" oninput="toggleClearBtn()"
                                onkeydown="if(event.key==='Enter') { commitRecentSearchAndTrigger(); }"
                                placeholder="차량번호, 사용처 등 입력" 
                                class="w-full pl-10 pr-10 py-3.5 bg-[#f8f9ff] dark:bg-[#121416] border-0 rounded-xl text-[15px] font-bold text-[#001943] dark:text-white placeholder:text-[#757682]/70 placeholder:font-medium focus:ring-2 focus:ring-[#00256c] dark:focus:ring-[#0057c2] transition-all">
                         <button id="clearSearchBtn" onclick="clearSearchInput()" class="absolute right-3 text-[#c5c6d2] hidden p-1 clickable"><span class="material-symbols-outlined fill text-xl">cancel</span></button>
                     </div>
-                    <!-- 명시적 검색 버튼 -->
                     <button onclick="commitRecentSearchAndTrigger()" class="px-4 py-3.5 bg-[#00256c] dark:bg-[#0057c2] text-white text-sm font-black rounded-xl whitespace-nowrap shadow-sm clickable">검색</button>
                 </div>
 
@@ -172,6 +188,7 @@
                 
                 <div class="flex justify-between items-center mb-2.5">
                     <h3 class="text-xs font-black text-[#00256c] dark:text-[#a8c7fa] flex items-center gap-1"><span class="material-symbols-outlined text-[#757682] text-sm">history</span> 최근 검색어</h3>
+                    <!-- 💡 최근검색어 전체삭제 마스터 버튼 완벽 동기화 복구 완료 -->
                     <button id="clearAllRecentsBtn" onclick="clearAllRecents()" class="text-[11px] font-bold text-[#ba1a1a] dark:text-red-400 flex items-center gap-0.5 bg-red-50 dark:bg-red-950/20 px-2 py-1 rounded-md hidden clickable">🗑️ 전체삭제</button>
                 </div>
                 <div id="recentSearchList" class="flex flex-wrap gap-2 empty:after:content-['최근_검색_기록이_없습니다.'] empty:after:text-xs empty:after:text-[#757682]"></div>
@@ -271,7 +288,7 @@
 
         <main id="view-expire-list" class="fixed inset-0 z-50 bg-[#f2f4f7] dark:bg-darkBg pt-[14px] pb-[96px] px-4 overflow-y-auto hidden animate-slide-up">
             <button onclick="closeExpireView()" class="mb-4 flex items-center gap-1 text-[#00256c] dark:text-[#a8c7fa] font-black text-sm clickable px-3 py-2 bg-white dark:bg-darkCard rounded-xl shadow-sm w-fit border border-[#c5c6d2]/50 dark:border-darkBorder"><span class="material-symbols-outlined text-base">arrow_back</span> 대시보드로 돌아가기</button>
-            <!-- 💡 텍스트 삭제 반영 완료 -->
+            <!-- 💡 괄호 속 복사가능 문구 전면 영구 소거 완료 -->
             <h2 class="text-base font-black text-[#00256c] dark:text-[#a8c7fa] mb-3 flex items-center gap-1.5"><span class="material-symbols-outlined fill text-[#ba1a1a]">calendar_today</span> 2026년 계약 만료 차량 목록</h2>
             <div id="expiringListContainer" class="flex flex-col gap-3"></div>
         </main>
@@ -344,7 +361,7 @@
         </button>
     </nav>
 
-    <!-- 팝업창 (Z:9999로 최상단 배치) -->
+    <!-- 팝업창 -->
     <div id="toastPopup" class="fixed bottom-[110px] left-1/2 transform -translate-x-1/2 z-[9999] bg-[#191c1e] dark:bg-gray-100 text-white dark:text-black text-[12px] font-bold px-5 py-3 rounded-full shadow-2xl flex items-center gap-1.5 transition-all duration-300 opacity-0 pointer-events-none whitespace-nowrap">
         <span class="material-symbols-outlined text-[16px] text-[#4caf50] fill">check_circle</span><span id="toastMsg">복사되었습니다.</span>
     </div>
@@ -451,7 +468,7 @@
       `05호3952|RAY (E) 라이트 2WD AT|현장지원|총무|ICNKF|2025.08.31|2029.08.31|467000|임차`, `05호3953|RAY (E) 라이트 2WD AT|현장지원|총무|ICNKF|2025.08.31|2029.08.31|467000|임차`, `05호3954|RAY (E) 라이트 2WD AT|현장지원|총무|ICNKF|2025.08.31|2029.08.31|467000|임차`,
       `169허2926|MORNING URBAN (G) 1.0 스탠다드|현장지원|정비|ICNQA|2022.05.16|2026.06.30|354000|임차`, `169허2927|MORNING URBAN (G) 1.0 스탠다드|현장지원|정비|ICNMC|2022.05.16|2026.06.30|354000|임차`, `169허3206|MORNING URBAN (G) 1.0 스탠다드|현장지원|정비|ICNMC|2022.05.16|2026.06.30|354000|임차`,
       `05호1709|RAY (E) 에어 2WD AT|현장지원|정비|-|2025.07.02|2029.07.02|494000|임차`, `05호1710|RAY (E) 에어 2WD AT|현장지원|정비|-|2025.07.02|2029.07.02|494000|임차`, `05호1708|RAY (E) 에어 2WD AT|현장지원|정비|-|2025.07.02|2029.07.02|494000|임차`,
-      `179하5421|CARNIVAL KA4 (H)1.6 프레스티지 9인 2WD AT|업무용|테크센터|-|2025.02.14|2030.02.14|841000|임차`, `703하3360|SOLATI (D)2.5 럭셔리 15인 2WD AT|업무용|테크센터|-|2025.03.31|2029.03.31|1800000|임차`, `230하8441|SORENTO MQ4 (H)1.6T 프레스티지 5인 4WD AT|업무용|테크센터|-|2025.03.05|2030.03.05|820000|임차`,
+      `179하5421|CARNIVAL KA4 (H)1.6 프레스시지 9인 2WD AT|업무용|테크센터|-|2025.02.14|2030.02.14|841000|임차`, `703하3360|SOLATI (D)2.5 럭셔리 15인 2WD AT|업무용|테크센터|-|2025.03.31|2029.03.31|1800000|임차`, `230하8441|SORENTO MQ4 (H)1.6T 프레스티지 5인 4WD AT|업무용|테크센터|-|2025.03.05|2030.03.05|820000|임차`,
       `179하5822|SORENTO MQ4 (H)1.6T 프레스티지 5인 4WD AT|업무용|테크센터|-|2025.03.04|2030.03.04|820000|임차`, `179하5823|SORENTO MQ4 (H)1.6T 프레스티지 5인 4WD AT|업무용|테크센터|-|2025.03.04|2030.03.04|820000|임차`, `179하5824|SORENTO MQ4 (H)1.6T 프레스티지 5인 4WD AT|업무용|테크센터|-|2025.03.04|2030.03.04|820000|임차`,
       `179하9736|STARIA (D)2.2 투어러 모던 9인 2WD AT|업무용|정비|-|2025.05.31|2029.05.31|748000|임차`, `44허9390|RAY (E) 라이트 2WD AT|현장지원|총무|ICNKF|2020.06.01|2026.12.31|357000|임차`, `05하8046|RAY (E) 에어 2WD AT|현장지원|총무|ICNKF|2020.06.01|2026.12.31|357000|임차`,
       `181하4251|CARNIVAL KA4 (H)1.6 노블레스 9인 2WD AT|현장지원|테크센터|-|2025.08.06|2030.08.06|878000|임차`, `181하4985|SORENTO MQ4 (H)1.6T 프레스티지 5인 4WD AT|업무용|테크센터|-|2025.09.22|2030.09.22|820000|임차`, `231하4791|STARIA (H)1.6 투어러 모던 9인 2WD AT|현장지원|정비|-|2025.10.31|2029.10.31|757000|임차`,
@@ -471,7 +488,7 @@
       `844조9403|스타리아 5밴|현장지원|정비|ICNMC|2023.06.28|-|871787|리스`, `845누3899|스타리아 5밴|현장지원|정비|ICNMC|2023.06.28|-|871787|리스`, `845누3896|스타리아 5밴|현장지원|정비|ICNMC|2023.06.28|-|857315|리스`,
       `844조9401|스타리아 5밴|현장지원|정비|ICNMC|2023.06.28|-|867936|리스`, `813도7156|스타리아 5밴|현장지원|정비|ICNMC|2023.06.01|-|871787|리스`, `802가6536|스타리아 5밴|현장지원|정비|ICNMC|2023.05.04|-|815190|리스`,
       `845누3895|스타리아 5밴|현장지원|정비|ICNMC|2023.06.28|-|857315|리스`, `823거8140|스타리아 5밴|현장지원|정비|ICNMC|2024.06.25|-|871787|리스`, `814보9436|스타리아 5밴|현장지원|정비|ICNMC|2023.02.13|-|871787|리스`,
-      `813도7157|스타리아 5밴|현장지원|정비|ICNMC|2023.06.01|-|872594|리스`, `845누3871|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|826784|리스`, `845누3872|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|871787|리스`,
+      `813도7157|스타리아 5밴|현장지원|정비|ICNMC|2023.06.01|-|872594|리스`, `845누3871|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|826784|리스`, `845누3872|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|871787|リス`,
       `845누3845|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|872594|리스`, `95저8970|스타렉스 5밴|현장지원|정비|ICNMC|2021.06.01|-|872594|리스`, `845누3873|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|872594|리스`,
       `845누3846|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|867936|리스`, `845누3847|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|872594|리스`, `845누3844|스타리아 5밴|현장지원|정비|ICNMC|2023.06.28|-|857315|리스`,
       `802가6537|스타리아 5밴|현장지원|정비|ICNMC|2023.05.04|-|871787|리스`, `845누3848|스타리아 5밴|현장지원|정비|ICNMC|2023.06.29|-|872594|리스`, `804로9353|스타리아 5밴|현장지원|정비|ICNMC|2024.07.12|-|757744|리스`,
@@ -494,7 +511,7 @@
     let recentSearches = JSON.parse(localStorage.getItem('ke_car_recents') || '[]');
 
     // ============================================================================
-    // 2. 보안 및 잠금 모듈
+    // 2. 🛡️ 5회 오류 제한 PIN 보안
     // ============================================================================
     let enteredPin = "";
     const CORRECT_PIN = "2656";
@@ -607,7 +624,7 @@
     }
 
     // ============================================================================
-    // 3. 테마 및 스크롤 코어 로직
+    // 3. 테마 및 스크롤 코어 로직 (다크모드 설정 보존)
     // ============================================================================
     function toggleDarkMode() {
         haptic();
@@ -624,19 +641,22 @@
         }
     }
 
-    // 💡 [해결] 이중 스크롤 감지 및 플로팅 버튼 제어 강화
-    window.addEventListener('scroll', () => {
+    // 💡 [해결] 이중 스크롤 감지 센서 파이프라인 정비 (Top 플로팅 버튼 출력 유도)
+    window.addEventListener('scroll', handleScrollTrigger, { passive: true });
+    document.addEventListener('scroll', handleScrollTrigger, { passive: true });
+
+    function handleScrollTrigger() {
         const topBtn = document.getElementById('scrollTopBtn');
-        const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
         
-        if (scrollY > 300) {
+        if (scrollY > 200) {
             topBtn.style.opacity = '1'; 
             topBtn.style.pointerEvents = 'auto';
         } else {
             topBtn.style.opacity = '0'; 
             topBtn.style.pointerEvents = 'none';
         }
-    });
+    }
 
     function scrollToTop() { 
         haptic(); 
@@ -653,7 +673,6 @@
     let currentFilteredData = [];
 
     function initApp() {
-        // 저장된 테마 기억 복구
         if(localStorage.getItem('ke_theme') === 'dark') {
             document.documentElement.classList.add('dark');
             const icon = document.getElementById('themeIcon');
@@ -929,15 +948,6 @@
                     <div class="flex justify-between pt-0.5"><span class="text-[#757682] dark:text-[#c5c6d2] font-bold">▪ 월 대여료</span><span class="font-mono font-extrabold text-[#191c1e] dark:text-white">${feeText}</span></div>
                 </div>
             </div>`;
-    }
-
-    function showToast(msg) {
-        const toast = document.getElementById('toastPopup');
-        const txt = document.getElementById('toastMsg');
-        if(msg) txt.innerText = msg;
-        toast.style.opacity = '1'; 
-        toast.style.bottom = '110px'; 
-        setTimeout(() => { toast.style.opacity = '0'; toast.style.bottom = '90px'; }, 2000);
     }
 
     // ============================================================================
